@@ -1,0 +1,5 @@
+quick flask app to interface with cryptocompare for slack integration
+
+
+This application runs using flask on gunicorn to user nginx as the server
+
