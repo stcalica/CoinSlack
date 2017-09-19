@@ -7,6 +7,7 @@ import json, requests
 @app.route('/', methods = [ 'GET', 'POST'])
 @app.route('/index', methods = [ 'GET', 'POST'])
 def index():
+	print(request.data)
 	return 'hello'
 	#return render_template('index.html', title='CoinSlack')
 
@@ -15,11 +16,11 @@ def entry():
 	return 'version'
 
 
-@app.route('/coins')
+@app.route('/coins', methods = [ 'GET', 'POST'])
 def coinList():
 	#https://www.cryptocompare.com/api/data/coinlist/
 	r = requests.get('https://www.cryptocompare.com/api/data/coinlist/')
 	response = json.loads(r.text)
-	coin_data = response["Data"]
-	coins = json.dumps(coin_data.keys()).strip(' \/')
-	return jsonify(coins)
+	coin_data = response["Data"] #dictionary
+	coins = [coin for coin in response["Data"]]
+	return jsonify(coins) 
