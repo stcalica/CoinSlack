@@ -1,6 +1,7 @@
 from app import app
 from flask import request
 from flask import render_template
+from flask import jsonify
 import json, requests
 
 @app.route('/', methods = [ 'GET', 'POST'])
@@ -18,7 +19,7 @@ def entry():
 def coinList():
 	#https://www.cryptocompare.com/api/data/coinlist/
 	r = requests.get('https://www.cryptocompare.com/api/data/coinlist/')
-	data = json.loads(r.text)
-	coins = data["Data"]
-	print(type(json.loads(coins)))
-	return json.dumps(coins)
+	response = json.loads(r.text)
+	coin_data = response["Data"]
+	coins = json.dumps(coin_data.keys()).strip(' \/')
+	return jsonify(coins)
